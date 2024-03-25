@@ -39,7 +39,26 @@ var pin_to_pwmchip_map_ = map[string]pwmchip{
 
 	"P9_42": pwmchip{6, 0}, //ECAPPWM0
 	"P9_28": pwmchip{7, 0}, //ECAPPWM2
+}
 
+var pin_to_pwmchip_map_debian_11 = map[string]pwmchip{
+	"P9_22": pwmchip{3, 0}, //EHRPWM0A
+	"P9_31": pwmchip{3, 0}, //EHRPWM0A //same as P9_22
+	"P9_21": pwmchip{3, 1}, //EHRPWM0B
+	"P9_29": pwmchip{3, 1}, //EHRPWM0B //same as P9_21
+
+	"P9_14": pwmchip{5, 0}, //EHRPWM1A
+	"P8_36": pwmchip{5, 0}, //EHRPWM1A //same as P9_14
+	"P9_16": pwmchip{5, 1}, //EHRPWM1B
+	"P8_34": pwmchip{5, 1}, //EHRPWM1B //same as P9_16
+
+	"P8_19": pwmchip{7, 0}, //EHRPWM2A
+	"P8_45": pwmchip{7, 0}, //EHRPWM2A // same as P8_19
+	"P8_13": pwmchip{7, 1}, //EHRPWM2B
+	"P8_46": pwmchip{7, 1}, //EHRPWM2B // same as P8_13
+
+	"P9_42": pwmchip{0, 0}, //ECAPPWM0
+	"P9_28": pwmchip{2, 0}, //ECAPPWM2
 }
 
 func LoadOverlayForSysfsPWM() error {
@@ -136,7 +155,7 @@ func NewBBBPWM(bbb_pin string) (pwm *BBPWMPin, err error) {
 	var pwm_path string
 	pwm_path, err = findPWMTestDir(bbb_pin)
 	if err != nil {
-		if pwmchip, lookup_ok := pin_to_pwmchip_map_[bbb_pin]; lookup_ok {
+		if pwmchip, lookup_ok := pin_to_pwmchip_map_debian_11[bbb_pin]; lookup_ok {
 			return NewPWMChipPWM(pwmchip.chip, pwmchip.pwm)
 		}
 	}
